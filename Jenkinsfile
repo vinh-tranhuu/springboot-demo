@@ -2,7 +2,8 @@ pipeline {
    agent any
    
     environment {
-        PORT="8082"
+        PORT_HOST="8081"
+        PORT_CONT="8080"
         IMAGE_TAG="springboot-demo"
         CONTAINER_NAME="bootdemo-app"
         DB_URL=credentials('DB_URL')
@@ -48,7 +49,7 @@ pipeline {
         }
         stage('create container') {
             steps {
-                sh 'docker run -e DB_URL=${DB_URL} -e DB_USER=${DB_USER} -e DB_PASS=${DB_PASS} -d --rm -p ${PORT}:${PORT} --name ${CONTAINER_NAME} ${IMAGE_TAG} '
+                sh 'docker run -e DB_URL=${DB_URL} -e DB_USER=${DB_USER} -e DB_PASS=${DB_PASS} -d --rm -p ${PORT_HOST}:${PORT_CONT} --name ${CONTAINER_NAME} ${IMAGE_TAG} '
             }
         }
     }
